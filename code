@@ -1,0 +1,18 @@
+import hashlib
+from cryptography.fernet import Fernet
+print("Secure Data Transmission App")
+message = input("Enter a message: ")
+hash1 = hashlib.sha256(message.encode()).hexdigest()
+key = Fernet.generate_key()
+cipher = Fernet(key)
+encrypted = cipher.encrypt(message.encode())
+decrypted = cipher.decrypt(encrypted).decode()
+hash2 = hashlib.sha256(decrypted.encode()).hexdigest()
+print("\nResults")
+print("Hash:", hash1)
+print("Encrypted:", encrypted)
+print("Decrypted:", decrypted)
+if hash1 == hash2:
+print("Integrity Check: Passed")
+else:
+print("Integrity Check: Failed")
